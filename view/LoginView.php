@@ -24,10 +24,10 @@ class LoginView {
 		$name = '';
 		if (empty($_POST)) {
 			$message = '';
-		} else if ($_POST['LoginView::UserName'] == "") {
+		} else if ($_POST[self::$name] == "") {
 			$message = 'Username is missing';
-		} else if ($_POST['LoginView::Password'] == "") {
-			$name = $_POST['LoginView::UserName'];
+		} else if ($_POST[self::$password] == "") {
+			$name = $_POST[self::$name];
 			$message = 'Password is missing';
 		}
 		$response = $this->generateLoginFormHTML($message, $name);
