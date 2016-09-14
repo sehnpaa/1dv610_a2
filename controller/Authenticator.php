@@ -9,8 +9,12 @@ class Authenticator {
 	}
   
 	public function isLoggedIn() {
+		if (isset($_SESSION['is_auth'])) {
+			return true;
+		}
 		if (isset($_POST['LoginView::UserName']) && isset($_POST['LoginView::Password'])) {
 			if ($_POST['LoginView::UserName'] == "Admin" && $_POST['LoginView::Password'] == "Password") {
+				$_SESSION['is_auth'] = true;
 				return true;
 			}
 		}
