@@ -4,7 +4,7 @@ session_start();
 
 class Authenticator {
 	private $v;
-	public function __construct(LoginView $v) {
+	public function __construct(LoginModel $m, LoginView $v) {
 		$this->v= $v;
 	}
   

@@ -1,5 +1,7 @@
 <?php
 
+require_once("model/LoginModel.php");
+
 class LoginView {
 	private static $login = 'LoginView::Login';
 	private static $logout = 'LoginView::Logout';
@@ -10,7 +12,11 @@ class LoginView {
 	private static $keep = 'LoginView::KeepMeLoggedIn';
 	private static $messageId = 'LoginView::Message';
 
-	
+	private $model;
+
+	public function __construct(LoginModel $model) {
+		$this->model = $model;
+	}
 
 	/**
 	 * Create HTTP response
