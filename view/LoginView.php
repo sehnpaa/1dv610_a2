@@ -87,9 +87,19 @@ class LoginView {
 		';
 	}
 	
-	//CREATE GET-FUNCTIONS TO FETCH REQUEST VARIABLES
-	private function getRequestUserName() {
-		//RETURN REQUEST VARIABLE: USERNAME
+	public function getRequestLogin() {
+		return self::$login;
 	}
-	
+
+	public function getRequestLogout() {
+		return self::$logout;
+	}
+
+	public function getRequestUserName() {
+		return self::$name;
+	}
+
+	public function getRequestPassword() {
+		return self::$password;
+	}
 }
