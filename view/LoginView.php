@@ -25,16 +25,19 @@ class LoginView {
 		if (empty($_POST)) {
 			$message = '';
 			$response = $this->generateLoginFormHTML($message, $name);
-		} else if ($_POST[self::$name] == "") {
+		} else if (isset($_POST[self::$login]) && $_POST[self::$name] == "") {
 			$message = 'Username is missing';
 			$response = $this->generateLoginFormHTML($message, $name);
-		} else if ($_POST[self::$password] == "") {
+		} else if (isset($_POST[self::$login]) && $_POST[self::$password] == "") {
 			$name = $_POST[self::$name];
 			$message = 'Password is missing';
 			$response = $this->generateLoginFormHTML($message, $name);
-		} else if (!($_POST[self::$name] == "Admin" && $_POST[self::$password] == "Password")) {
+		} else if (isset($_POST[self::$login]) && !($_POST[self::$name] == "Admin" && $_POST[self::$password] == "Password")) {
 			$name = $_POST[self::$name];
 			$message = "Wrong name or password";
+			$response = $this->generateLoginFormHTML($message, $name);
+		} else if(isset($_POST[self::$logout])) {
+			$message = "Bye bye!";
 			$response = $this->generateLoginFormHTML($message, $name);
 		} else if ($isLoggedIn) {
 			$message = "Welcome";

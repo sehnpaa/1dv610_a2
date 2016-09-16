@@ -9,6 +9,9 @@ class Authenticator {
 	}
   
 	public function isLoggedIn() {
+		if (isset($_POST['LoginView::Logout'])) {
+			return false;
+		}
 		if (isset($_SESSION['is_auth'])) {
 			return true;
 		}
