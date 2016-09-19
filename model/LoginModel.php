@@ -1,6 +1,8 @@
 <?php
 
 class LoginModel {
+	private $loggedIn;
+
 	public function __construct() {
 	}
 
@@ -16,8 +18,10 @@ class LoginModel {
 			$message = "Wrong name or password";
 		} else if(isset($_POST['LoginView::Logout'])) {
 			$message = "Bye bye!";
-		} else if ($isLoggedIn) {
+			$this->loggedIn = false;
+		} else if (isset($_POST['LoginView::Login']) && ($_POST['LoginView::UserName'] == "Admin" && $_POST['LoginView::Password'] == "Password")) {
 			$message = "Welcome";
+			$this->loggedIn = true;
 		}
 		return $message;
 	}
@@ -31,11 +35,13 @@ class LoginModel {
 			$name = $_POST['LoginView::UserName'];
 		} else if (isset($_POST['LoginView::Login']) && !($_POST['LoginView::UserName'] == "Admin" && $_POST['LoginView::Password'] == "Password")) {
 			$name = $_POST['LoginView::UserName'];
-		} else if(isset($_POST[self::$logout])) {
-
-		} else if ($isLoggedIn) {
+		} else if(isset($_POST['LoginView::Logout'])) {
 
 		}
 		return $name;
+	}
+
+	public function isLoggedIn() {
+		return $this->loggedIn;
 	}
 }
