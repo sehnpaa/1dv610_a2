@@ -20,6 +20,7 @@ $lv = new LayoutView();
 
 $a = new Authenticator($loginModel, $v);
 
+$a->authenticate();
 $isLoggedIn = $a->isLoggedIn();
 
 $lv->render($isLoggedIn, $v, $dtv);
