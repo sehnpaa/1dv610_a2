@@ -2,7 +2,7 @@
 
 session_start();
 
-class Authenticator {
+class LoginController {
 	private $m;
 	private $v;
 	public function __construct(LoginModel $m, LoginView $v) {
