@@ -21,7 +21,6 @@ $lv = new LayoutView();
 $c = new LoginController($loginModel, $v);
 
 $c->authenticate();
-$isLoggedIn = $c->isLoggedIn();
 
-$lv->render($isLoggedIn, $v, $dtv);
+$lv->render($loginModel, $v, $dtv);
 
