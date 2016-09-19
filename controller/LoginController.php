@@ -25,6 +25,7 @@ class LoginController {
 		} else if(isset($_POST[$this->v->getRequestLogout()])) {
 			$this->m->setMessage($this->m->farewellStatement());
 			$this->m->logout();
+			session_unset();
 		} else if (isset($_POST[$this->v->getRequestLogin()]) && ($_POST[$this->v->getRequestUserName()] == "Admin" && $_POST[$this->v->getRequestPassword()] == "Password")) {
 			$_SESSION['is_auth'] = true;
 			$this->m->setMessage($this->m->welcomeStatement());
