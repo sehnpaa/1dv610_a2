@@ -28,16 +28,16 @@ class LoginController {
 	public function authenticate() {
 		if (empty($_POST)) {
 			$this->m->setMessage($this->m->emptyStatement());
-		} else if (isset($_POST['LoginView::Login']) && $_POST['LoginView::UserName'] == "") {
+		} else if (isset($_POST[$this->v->getRequestLogin()]) && $_POST[$this->v->getRequestUserName()] == "") {
 			$this->m->setMessage($this->m->missingUserNameStatement());
-		} else if (isset($_POST['LoginView::Login']) && $_POST['LoginView::Password'] == "") {
+		} else if (isset($_POST[$this->v->getRequestLogin()]) && $_POST[$this->v->getRequestPassword()] == "") {
 			$this->m->setMessage($this->m->missingPasswordStatement());
-		} else if (isset($_POST['LoginView::Login']) && !($_POST['LoginView::UserName'] == "Admin" && $_POST['LoginView::Password'] == "Password")) {
+		} else if (isset($_POST[$this->v->getRequestLogin()]) && !($_POST[$this->v->getRequestUserName()] == "Admin" && $_POST[$this->v->getRequestPassword()] == "Password")) {
 			$this->m->setMessage($this->m->badCredentialsStatement());
-		} else if(isset($_POST['LoginView::Logout'])) {
+		} else if(isset($_POST[$this->v->getRequestLogout()])) {
 			$this->m->setMessage($this->m->farewellStatement());
 			$this->m->login();
-		} else if (isset($_POST['LoginView::Login']) && ($_POST['LoginView::UserName'] == "Admin" && $_POST['LoginView::Password'] == "Password")) {
+		} else if (isset($_POST[$this->v->getRequestLogin()]) && ($_POST[$this->v->getRequestUserName()] == "Admin" && $_POST[$this->v->getRequestPassword()] == "Password")) {
 			$this->m->setMessage($this->m->welcomeStatement());
 			$this->m->logout();
 		}
