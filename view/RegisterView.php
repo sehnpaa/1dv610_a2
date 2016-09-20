@@ -1,19 +1,18 @@
 <?php
 
-//require_once("model/LoginModel.php");
+require_once("model/RegisterModel.php");
 
 class RegisterView {
-	//private static $login = 'LoginView::Login';
-	//private static $logout = 'LoginView::Logout';
 	private static $name = 'RegisterView::UserName';
 	private static $password = 'RegisterView::Password';
 	private static $passwordRepeat = 'RegisterView::PasswordRepeat';
-	//private static $cookieName = 'LoginView::CookieName';
-	//private static $cookiePassword = 'LoginView::CookiePassword';
-	//private static $keep = 'LoginView::KeepMeLoggedIn';
 	private static $messageId = 'RegisterView::Message';
+	private static $register = 'RegisterView::Register';
 
-	public function __construct() {
+	private $m;
+
+	public function __construct(RegisterModel $m) {
+		$this->m = $m;
 	}
 
 	/**
@@ -24,8 +23,8 @@ class RegisterView {
 	 * @return  void BUT writes to standard output and cookies!
 	 */
 	public function response() {
-		/*$message = $this->model->getMessage();
-		$name = $this->model->getName();
+		$message = $this->m->getMessage();
+		/*$name = $this->model->getName();
 		if ($this->model->isLoggedIn()) {
 			$response = $this->generateLogoutButtonHTML($message);
 		} else {
@@ -33,7 +32,7 @@ class RegisterView {
 		}*/
 		$response = "";
 		if ($_SERVER['QUERY_STRING'] == "register" || $_SERVER['QUERY_STRING'] == "register=1") {
-			$response = $this->generateRegisterFormHTML("", "");
+			$response = $this->generateRegisterFormHTML($message, "");
 		}
 		return $response;
 	}
@@ -58,19 +57,11 @@ class RegisterView {
 			<label for="'. self::$passwordRepeat . '">Repeat password  :</label>
 			<input type="password" size="20" name="' . self::$passwordRepeat . '" id="' . self::$passwordRepeat . '" value="" />
 			<br/>
-			<input id="submit" type="submit" name="DoRegistration"  value="Register" />
+			<input id="submit" type="submit" name="' . self::$register . '"  value="Register" />
 			<br/>
 		</fieldset>
 	</form>
 		';
-	}
-
-	/*public function getRequestLogin() {
-		return self::$login;
-	}
-
-	public function getRequestLogout() {
-		return self::$logout;
 	}
 
 	public function getRequestUserName() {
@@ -79,5 +70,13 @@ class RegisterView {
 
 	public function getRequestPassword() {
 		return self::$password;
-	}*/
+	}
+
+	public function getRequestPasswordRepeat() {
+		return self::$passwordRepeat;
+	}
+
+	public function getRequestRegister() {
+		return self::$register;
+	}
 }

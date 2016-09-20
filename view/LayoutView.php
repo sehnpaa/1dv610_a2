@@ -1,11 +1,8 @@
 <?php
 
-require_once("RegisterView.php");
-
 class LayoutView {
   
-  public function render(LoginModel $m, LoginView $v, DateTimeView $dtv) {
-	$regView = new RegisterView();
+  public function render(LoginModel $m, RegisterView $regView, LoginView $v, DateTimeView $dtv) {
     echo '<!DOCTYPE html>
       <html>
         <head>
