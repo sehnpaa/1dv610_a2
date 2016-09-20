@@ -28,4 +28,10 @@ class RegisterModel {
 	public function emptyPasswordStatement() {
 		return "Password has too few characters, at least 6 characters.";
 	}
+	public function shortUserNameStatement() {
+		return "Username has too few characters, at least 3 characters.";
+	}
+	public function minLengthUserName() {
+		return 3;
+	}
 }
