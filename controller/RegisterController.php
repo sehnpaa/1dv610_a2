@@ -10,17 +10,15 @@ class RegisterController {
 	}
 
 	public function run() {
-		if ($this->registerWasPressed() && $this->invalidInput()) {
+		if ($this->registerWasPressed() && $this->emptyUserName()) {
 			$this->m->setMessage($this->m->noInputStatement());
 		}
 	}
 	private function registerWasPressed() {
 		return isset($_POST[$this->v->getRequestRegister()]);
 	}
-	private function invalidInput() {
-		if ($_POST[$this->v->getRequestUserName()] == "") {
-			return true;
-		}
+	private function emptyUserName() {
+		return $_POST[$this->v->getRequestUserName()] == "";
 	}
 
 }
