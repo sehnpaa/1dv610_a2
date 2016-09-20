@@ -12,6 +12,9 @@ class RegisterController {
 	public function run() {
 		if ($this->registerWasPressed() && $this->emptyUserName()) {
 			$this->m->setMessage($this->m->noInputStatement());
+		} else if ($this->registerWasPressed() && $this->emptyPassword()) {
+			$this->m->setName($_POST[$this->v->getRequestUserName()]);
+			$this->m->setMessage($this->m->emptyPasswordStatement());
 		}
 	}
 	private function registerWasPressed() {
@@ -19,6 +22,9 @@ class RegisterController {
 	}
 	private function emptyUserName() {
 		return $_POST[$this->v->getRequestUserName()] == "";
+	}
+	private function emptyPassword() {
+		return $_POST[$this->v->getRequestPassword()] == "";
 	}
 
 }
