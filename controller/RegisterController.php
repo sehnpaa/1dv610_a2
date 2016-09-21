@@ -10,7 +10,7 @@ class RegisterController {
 	}
 
 	public function run() {
-		if ($this->registerWasPressed() && $this->emptyUserName()) {
+		if ($this->registerWasPressed() && $this->emptyUserName() && $this->emptyPassword()) {
 			$this->m->setMessage($this->m->noInputStatement());
 		} else if ($this->registerWasPressed() && $this->emptyPassword()) {
 			$this->m->setName($_POST[$this->v->getRequestUserName()]);
