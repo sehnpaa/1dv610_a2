@@ -43,4 +43,10 @@ class RegisterModel {
 	public function differentPasswordsStatement() {
 		return "Passwords do not match.";
 	}
+	public function unavailableUserNameStatement() {
+		return "User exists, pick another username.";
+	}
+	public function unavailableUserName($name) {
+		return $name == "Admin";
+	}
 }

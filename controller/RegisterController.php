@@ -24,6 +24,9 @@ class RegisterController {
 		} else if ($this->registerWasPressed() && $this->differentPasswords()) {
 			$this->m->setName($_POST[$this->v->getRequestUserName()]);
 			$this->m->setMessage($this->m->differentPasswordsStatement());
+		} else if ($this->registerWasPressed() && $this->unavailableUserName()) {
+			$this->m->setName($_POST[$this->v->getRequestUserName()]);
+			$this->m->setMessage($this->m->unavailableUserNameStatement());
 		}
 	}
 	private function registerWasPressed() {
@@ -47,6 +50,11 @@ class RegisterController {
 		$password = $_POST[$this->v->getRequestPassword()];
 		$passwordRepeat = $_POST[$this->v->getRequestPasswordRepeat()];
 		return $password != $passwordRepeat;
+	}
+	private function unavailableUserName() {
+		$candidate = $_POST[$this->v->getRequestUserName()];
+		return $this->m->unavailableUserName($candidate);
+		//return $_POST[$this->v->getRequestUserName()] == "Admin";
 	}
 
 }
