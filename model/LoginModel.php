@@ -3,6 +3,7 @@
 class LoginModel {
 	private $loggedIn;
 	private $message = '';
+	private $name = '';
 
 	public function __construct() {
 	}
@@ -16,18 +17,11 @@ class LoginModel {
 	}
 
 	public function getName() {
-		$name = '';
-		if (empty($_POST)) {
+		return $this->name;
+	}
 
-		} else if (isset($_POST['LoginView::Login']) && $_POST['LoginView::UserName'] == "") {
-		} else if (isset($_POST['LoginView::Login']) && $_POST['LoginView::Password'] == "") {
-			$name = $_POST['LoginView::UserName'];
-		} else if (isset($_POST['LoginView::Login']) && !($_POST['LoginView::UserName'] == "Admin" && $_POST['LoginView::Password'] == "Password")) {
-			$name = $_POST['LoginView::UserName'];
-		} else if(isset($_POST['LoginView::Logout'])) {
-
-		}
-		return $name;
+	public function setName($name) {
+		$this->name = $name;
 	}
 
 	public function isLoggedIn() {

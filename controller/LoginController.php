@@ -20,6 +20,7 @@ class LoginController {
 			$this->m->setMessage($this->m->missingUserNameStatement());
 		} else if (isset($_POST[$this->v->getRequestLogin()]) && $_POST[$this->v->getRequestPassword()] == "") {
 			$this->m->setMessage($this->m->missingPasswordStatement());
+			$this->m->setName($_POST[$this->v->getRequestUserName()]);
 		} else if (isset($_POST[$this->v->getRequestLogin()]) && !($_POST[$this->v->getRequestUserName()] == "Admin" && $_POST[$this->v->getRequestPassword()] == "Password")) {
 			$this->m->setMessage($this->m->badCredentialsStatement());
 		} else if(isset($_POST[$this->v->getRequestLogout()])) {
