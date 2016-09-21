@@ -25,7 +25,7 @@ $lc->authenticate();
 
 $rm = new RegisterModel();
 $rv = new RegisterView($rm);
-$rc = new RegisterController($rm, $rv);
+$rc = new RegisterController($rm, $rv, $lc);
 $rc->run();
 
 $lv->render($loginModel, $rv, $v, $dtv);

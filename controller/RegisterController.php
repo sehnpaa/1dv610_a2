@@ -1,12 +1,13 @@
 <?php
 
-
 class RegisterController {
 	private $m;
 	private $v;
-	public function __construct(RegisterModel $m, RegisterView $v) {
+	private $loginController;
+	public function __construct(RegisterModel $m, RegisterView $v, LoginController $loginController) {
 		$this->m = $m;
 		$this->v = $v;
+		$this->loginController = $loginController;
 	}
 
 	public function run() {
@@ -27,6 +28,12 @@ class RegisterController {
 		} else if ($this->registerWasPressed() && $this->unavailableUserName()) {
 			$this->m->setName($_POST[$this->v->getRequestUserName()]);
 			$this->m->setMessage($this->m->unavailableUserNameStatement());
+		} else if ($this->registerWasPressed()) {
+			$name = $_POST[$this->v->getRequestUserName()];
+			$password = $_POST[$this->v->getRequestPassword()];
+			$this->m->registerUser($name, $password);
+			$this->loginController->setUserName($_POST[$this->v->getRequestUserName()]);
+			$this->loginController->setMessage($this->m->registerUserStatement());
 		}
 	}
 	private function registerWasPressed() {
@@ -54,7 +61,6 @@ class RegisterController {
 	private function unavailableUserName() {
 		$candidate = $_POST[$this->v->getRequestUserName()];
 		return $this->m->unavailableUserName($candidate);
-		//return $_POST[$this->v->getRequestUserName()] == "Admin";
 	}
 
 }

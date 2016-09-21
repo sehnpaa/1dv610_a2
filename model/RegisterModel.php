@@ -49,4 +49,10 @@ class RegisterModel {
 	public function unavailableUserName($name) {
 		return $name == "Admin";
 	}
+	public function registerUserStatement() {
+		return "Registered new user.";
+	}
+	public function registerUser() {
+
+	}
 }

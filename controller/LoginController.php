@@ -33,4 +33,10 @@ class LoginController {
 			$this->m->login();
 		}
 	}
+	public function setUserName($name) {
+		$this->m->setName($name);
+	}
+	public function setMessage($message) {
+		$this->m->setMessage($message);
+	}
 }
