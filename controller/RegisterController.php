@@ -14,7 +14,7 @@ class RegisterController {
 			$this->m->setMessage($this->m->noInputStatement());
 		} else if ($this->registerWasPressed() && $this->emptyPassword()) {
 			$this->m->setName($_POST[$this->v->getRequestUserName()]);
-			$this->m->setMessage($this->m->emptyPasswordStatement());
+			$this->m->setMessage($this->m->shortPasswordStatement());
 		} else if ($this->registerWasPressed() && $this->shortUserName()) {
 			$this->m->setName($_POST[$this->v->getRequestUserName()]);
 			$this->m->setMessage($this->m->shortUserNameStatement());

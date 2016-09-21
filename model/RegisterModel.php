@@ -23,16 +23,16 @@ class RegisterModel {
 		$this->name= $newName;
 	}
 	public function noInputStatement() {
-		return "Username has too few characters, at least 3 characters.<br/>Password has too few characters, at least 6 characters.";
+		return $this->shortUserNameStatement() . "\r\n" . $this->shortPasswordStatement();
 	}
-	public function emptyPasswordStatement() {
-		return "Password has too few characters, at least 6 characters.";
+	private function shortStatement($a, $min) {
+		return $a . " has too few characters, at least " . $min . " characters.";
 	}
 	public function shortUserNameStatement() {
-		return "Username has too few characters, at least 3 characters.";
+		return $this->shortStatement("Username", $this->minLengthUserName());
 	}
 	public function shortPasswordStatement() {
-		return "Password has too few characters, at least 6 characters.";
+		return $this->shortStatement("Password", $this->minLengthPassword());
 	}
 	public function minLengthUserName() {
 		return 3;
