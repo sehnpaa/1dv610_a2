@@ -40,4 +40,7 @@ class RegisterModel {
 	public function minLengthPassword() {
 		return 6;
 	}
+	public function differentPasswordsStatement() {
+		return "Passwords do not match.";
+	}
 }

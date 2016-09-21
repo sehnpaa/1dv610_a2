@@ -21,6 +21,9 @@ class RegisterController {
 		} else if ($this->registerWasPressed() && $this->shortPassword()) {
 			$this->m->setName($_POST[$this->v->getRequestUserName()]);
 			$this->m->setMessage($this->m->shortPasswordStatement());
+		} else if ($this->registerWasPressed() && $this->differentPasswords()) {
+			$this->m->setName($_POST[$this->v->getRequestUserName()]);
+			$this->m->setMessage($this->m->differentPasswordsStatement());
 		}
 	}
 	private function registerWasPressed() {
@@ -39,6 +42,11 @@ class RegisterController {
 	private function shortPassword() {
 		$password = $_POST[$this->v->getRequestPassword()];
 		return strlen($password) < $this->m->minLengthPassword();
+	}
+	private function differentPasswords() {
+		$password = $_POST[$this->v->getRequestPassword()];
+		$passwordRepeat = $_POST[$this->v->getRequestPasswordRepeat()];
+		return $password != $passwordRepeat;
 	}
 
 }
