@@ -31,7 +31,13 @@ class RegisterModel {
 	public function shortUserNameStatement() {
 		return "Username has too few characters, at least 3 characters.";
 	}
+	public function shortPasswordStatement() {
+		return "Password has too few characters, at least 6 characters.";
+	}
 	public function minLengthUserName() {
 		return 3;
+	}
+	public function minLengthPassword() {
+		return 6;
 	}
 }
