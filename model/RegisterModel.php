@@ -23,7 +23,7 @@ class RegisterModel {
 		$this->name= $newName;
 	}
 	public function noInputStatement() {
-		return $this->shortUserNameStatement() . "\r\n" . $this->shortPasswordStatement();
+		return $this->shortUserNameStatement() . " " . $this->shortPasswordStatement();
 	}
 	private function shortStatement($a, $min) {
 		return $a . " has too few characters, at least " . $min . " characters.";
