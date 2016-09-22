@@ -1,6 +1,6 @@
 <?php
 
-require_once("model/LoginModel.php");
+namespace view;
 
 class LoginView {
 	private static $login = 'LoginView::Login';

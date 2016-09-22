@@ -1,6 +1,6 @@
 <?php
 
-require_once("model/RegisterModel.php");
+namespace view;
 
 class RegisterView {
 	private static $name = 'RegisterView::UserName';
@@ -11,7 +11,7 @@ class RegisterView {
 
 	private $m;
 
-	public function __construct(RegisterModel $m) {
+	public function __construct(\model\RegisterModel $m) {
 		$this->m = $m;
 	}
 

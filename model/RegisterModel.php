@@ -1,5 +1,7 @@
 <?php
 
+namespace model;
+
 class RegisterModel {
 	private $loggedIn;
 	private $message = '';

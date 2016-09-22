@@ -1,8 +1,10 @@
 <?php
 
+namespace view;
+
 class LayoutView {
   
-  public function render(\model\LoginModel $m, RegisterView $regView, LoginView $v, DateTimeView $dtv) {
+  public function render(\model\LoginModel $m, RegisterView $regView, \view\LoginView $v, \view\DateTimeView $dtv) {
     echo '<!DOCTYPE html>
       <html>
         <head>

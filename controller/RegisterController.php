@@ -1,10 +1,12 @@
 <?php
 
+namespace controller;
+
 class RegisterController {
 	private $m;
 	private $v;
 	private $loginController;
-	public function __construct(RegisterModel $m, RegisterView $v, LoginController $loginController) {
+	public function __construct(\model\RegisterModel $m, \view\RegisterView $v, \controller\LoginController $loginController) {
 		$this->m = $m;
 		$this->v = $v;
 		$this->loginController = $loginController;
