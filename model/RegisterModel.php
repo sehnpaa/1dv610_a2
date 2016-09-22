@@ -55,4 +55,7 @@ class RegisterModel {
 	public function registerUser() {
 
 	}
+	public function invalidCharactersStatement() {
+		return "Username contains invalid characters.";
+	}
 }

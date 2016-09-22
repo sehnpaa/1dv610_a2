@@ -16,6 +16,9 @@ class RegisterController {
 		} else if ($this->registerWasPressed() && $this->emptyPassword()) {
 			$this->m->setName($_POST[$this->v->getRequestUserName()]);
 			$this->m->setMessage($this->m->shortPasswordStatement());
+		} else if ($this->registerWasPressed() && $this->invalidCharacters()) {
+			$this->m->setName($this->unwrap($_POST[$this->v->getRequestUserName()]));
+			$this->m->setMessage($this->m->invalidCharactersStatement());
 		} else if ($this->registerWasPressed() && $this->shortUserName()) {
 			$this->m->setName($_POST[$this->v->getRequestUserName()]);
 			$this->m->setMessage($this->m->shortUserNameStatement());
@@ -61,6 +64,15 @@ class RegisterController {
 	private function unavailableUserName() {
 		$candidate = $_POST[$this->v->getRequestUserName()];
 		return $this->m->unavailableUserName($candidate);
+	}
+	private function unwrap($a) {
+		preg_match('/<[a-zA-Z0-9]*>(.*?)<\/[a-zA-Z0-9]*>/s', $a, $match);
+		return $match[1];
+	}
+	private function invalidCharacters() {
+		$a = $_POST[$this->v->getRequestUserName()];
+		preg_match('/<[a-zA-Z0-9]*>(.*?)<\/[a-zA-Z0-9]*>/s', $a, $match);
+		return isset($match[1]);
 	}
 
 }
