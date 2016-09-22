@@ -14,7 +14,7 @@ require_once('controller/RegisterController.php');
 error_reporting(E_ALL);
 ini_set('display_errors', 'On');
 
-$loginModel = new LoginModel();
+$loginModel = new \model\LoginModel();
 //CREATE OBJECTS OF THE VIEWS
 $v = new LoginView($loginModel);
 $dtv = new DateTimeView();

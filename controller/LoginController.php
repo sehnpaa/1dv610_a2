@@ -5,7 +5,7 @@ session_start();
 class LoginController {
 	private $m;
 	private $v;
-	public function __construct(LoginModel $m, LoginView $v) {
+	public function __construct(\model\LoginModel $m, LoginView $v) {
 		$this->m = $m;
 		$this->v = $v;
 	}

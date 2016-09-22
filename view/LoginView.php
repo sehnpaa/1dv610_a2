@@ -14,7 +14,7 @@ class LoginView {
 
 	private $model;
 
-	public function __construct(LoginModel $model) {
+	public function __construct(\model\LoginModel $model) {
 		$this->model = $model;
 	}
 
