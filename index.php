@@ -20,7 +20,7 @@ $dtv = new \view\DateTimeView();
 $lv = new \view\LayoutView();
 
 $lc = new \controller\LoginController($loginModel, $v);
-$lc->authenticate();
+$lc->run();
 
 $rm = new \model\RegisterModel();
 $rv = new \view\RegisterView($rm);

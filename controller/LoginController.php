@@ -11,28 +11,29 @@ class LoginController {
 		$this->m = $m;
 		$this->v = $v;
 	}
-  
-	public function authenticate() {
-		if (isset($_SESSION['is_auth'])) {
+
+	public function run() {
+		if ($this->alreadyAuthenticated()) {
 			$this->m->login();
 		}
-		if (empty($_POST)) {
-			$this->m->setMessage($this->m->emptyStatement());
-		} else if (isset($_POST[$this->v->getRequestLogin()]) && $_POST[$this->v->getRequestUserName()] == "") {
-			$this->m->setMessage($this->m->missingUserNameStatement());
-		} else if (isset($_POST[$this->v->getRequestLogin()]) && $_POST[$this->v->getRequestPassword()] == "") {
-			$this->m->setMessage($this->m->missingPasswordStatement());
-			$this->m->setName($_POST[$this->v->getRequestUserName()]);
-		} else if (isset($_POST[$this->v->getRequestLogin()]) && !($_POST[$this->v->getRequestUserName()] == "Admin" && $_POST[$this->v->getRequestPassword()] == "Password")) {
-			$this->m->setMessage($this->m->badCredentialsStatement());
-		} else if(isset($_POST[$this->v->getRequestLogout()])) {
+
+		if ($this->loginAttempt()) {
+			if ($this->userName() == "") {
+				$this->m->setMessage($this->m->missingUserNameStatement());
+			} else if ($this->password() == "") {
+				$this->m->setMessage($this->m->missingPasswordStatement());
+				$this->m->setName($_POST[$this->v->getRequestUserName()]);
+			} else if (!$this->correctCredentials()) {
+				$this->m->setMessage($this->m->badCredentialsStatement());
+			} else if ($this->correctCredentials()) {
+				$_SESSION['is_auth'] = true;
+				$this->m->setMessage($this->m->welcomeStatement());
+				$this->m->login();
+			}
+		} else if($this->logoutAttempt()) {
 			$this->m->setMessage($this->m->farewellStatement());
 			$this->m->logout();
 			session_unset();
-		} else if (isset($_POST[$this->v->getRequestLogin()]) && ($_POST[$this->v->getRequestUserName()] == "Admin" && $_POST[$this->v->getRequestPassword()] == "Password")) {
-			$_SESSION['is_auth'] = true;
-			$this->m->setMessage($this->m->welcomeStatement());
-			$this->m->login();
 		}
 	}
 	public function setUserName($name) {
@@ -40,5 +41,23 @@ class LoginController {
 	}
 	public function setMessage($message) {
 		$this->m->setMessage($message);
+	}
+	private function loginAttempt() {
+		return isset($_POST[$this->v->getRequestLogin()]);
+	}
+	private function userName() {
+		return $_POST[$this->v->getRequestUserName()];
+	}
+	private function password() {
+		return $_POST[$this->v->getRequestPassword()];
+	}
+	private function correctCredentials() {
+		return $this->username() == "Admin" && $this->password() == "Password";
+	}
+	private function logoutAttempt() {
+		return isset($_POST[$this->v->getRequestLogout()]);
+	}
+	private function alreadyAuthenticated() {
+		return isset($_SESSION['is_auth']);
 	}
 }
