@@ -13,11 +13,13 @@ class LoginController {
 	}
 
 	public function run() {
-		if ($this->alreadyAuthenticated()) {
+		if($this->logoutAttempt()) {
+			$this->m->setMessage($this->m->farewellStatement());
+			$this->m->logout();
+			session_unset();
+		} else if ($this->alreadyAuthenticated()) {
 			$this->m->login();
-		}
-
-		if ($this->loginAttempt()) {
+		} else if ($this->loginAttempt()) {
 			if ($this->userName() == "") {
 				$this->m->setMessage($this->m->missingUserNameStatement());
 			} else if ($this->password() == "") {
@@ -30,10 +32,6 @@ class LoginController {
 				$this->m->setMessage($this->m->welcomeStatement());
 				$this->m->login();
 			}
-		} else if($this->logoutAttempt()) {
-			$this->m->setMessage($this->m->farewellStatement());
-			$this->m->logout();
-			session_unset();
 		}
 	}
 	public function setUserName($name) {
