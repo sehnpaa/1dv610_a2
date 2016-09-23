@@ -14,9 +14,13 @@ class LoginController {
 
 	public function run() {
 		if($this->logoutAttempt()) {
-			$this->m->setMessage($this->m->farewellStatement());
-			$this->m->logout();
-			session_unset();
+			if ($this->alreadyAuthenticated()) {
+				$this->m->setMessage($this->m->farewellStatement());
+				$this->m->logout();
+				session_unset();
+			} else {
+				$this->m->setMessage($this->m->emptyStatement());
+			}
 		} else if ($this->alreadyAuthenticated()) {
 			$this->m->login();
 		} else if ($this->loginAttempt()) {
