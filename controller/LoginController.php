@@ -38,8 +38,12 @@ class LoginController {
 				$this->setCookie();
 			}
 		} else if ($this->cookieLoginAttempt()) {
-			$this->m->setMessage("Welcome back with cookie");
-			$this->m->login();
+			if ($this->manipulatedCookie()) {
+				$this->m->setMessage("Wrong information in cookies");
+			} else {
+				$this->m->setMessage("Welcome back with cookie");
+				$this->m->login();
+			}
 		}
 	}
 	private function cookieLoginAttempt() {
@@ -74,5 +78,8 @@ class LoginController {
 		$cookiePassword = $this->v->getRequestCookiePassword();
 		setcookie($cookieName, "Admin", time()+10);
 		setcookie($cookiePassword, "kdjflakjsdflakjdflaksjdf", time()+10);
+	}
+	private function manipulatedCookie() {
+		return $_COOKIE[$this->v->getRequestCookiePassword()] == "0123456789";
 	}
 }
