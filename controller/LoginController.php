@@ -2,7 +2,6 @@
 
 namespace controller;
 
-session_start();
 
 class LoginController {
 	private $m;
@@ -13,6 +12,7 @@ class LoginController {
 	}
 
 	public function run() {
+		session_start();
 		if($this->logoutAttempt()) {
 			if ($this->alreadyAuthenticated()) {
 				$this->m->setMessage($this->m->farewellStatement());
