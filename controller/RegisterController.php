@@ -35,8 +35,6 @@ class RegisterController {
 				$this->m->setName($this->userName());
 				$this->m->setMessage($this->m->unavailableUserNameStatement());
 			} else {
-				$name = $this->userName();
-				$password = $this->password();
 				$this->m->registerUser($this->userName(), $this->password());
 				$this->loginController->setUserName($this->userName());
 				$this->loginController->setMessage($this->m->registerUserStatement());
