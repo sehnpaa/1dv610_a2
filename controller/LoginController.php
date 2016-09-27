@@ -35,8 +35,15 @@ class LoginController {
 				$_SESSION['is_auth'] = true;
 				$this->m->setMessage($this->m->welcomeStatement());
 				$this->m->login();
+				$this->setCookie();
 			}
+		} else if ($this->cookieLoginAttempt()) {
+			$this->m->setMessage("Welcome back with cookie");
+			$this->m->login();
 		}
+	}
+	private function cookieLoginAttempt() {
+		return isset($_COOKIE[$this->v->getRequestCookieName()]);
 	}
 	public function setUserName($name) {
 		$this->m->setName($name);
@@ -61,5 +68,11 @@ class LoginController {
 	}
 	private function alreadyAuthenticated() {
 		return isset($_SESSION['is_auth']);
+	}
+	private function setCookie() {
+		$cookieName = $this->v->getRequestCookieName();
+		$cookiePassword = $this->v->getRequestCookiePassword();
+		setcookie($cookieName, "Admin", time()+10);
+		setcookie($cookiePassword, "kdjflakjsdflakjdflaksjdf", time()+10);
 	}
 }

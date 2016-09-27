@@ -92,4 +92,10 @@ class LoginView {
 	public function getRequestPassword() {
 		return self::$password;
 	}
+	public function getRequestCookieName() {
+		return self::$cookieName;
+	}
+	public function getRequestCookiePassword() {
+		return self::$cookiePassword;
+	}
 }
