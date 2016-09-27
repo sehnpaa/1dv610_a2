@@ -13,46 +13,54 @@ class RegisterController {
 	}
 
 	public function run() {
-		if ($this->registerWasPressed() && $this->emptyUserName() && $this->emptyPassword()) {
-			$this->m->setMessage($this->m->noInputStatement());
-		} else if ($this->registerWasPressed() && $this->emptyPassword()) {
-			$this->m->setName($_POST[$this->v->getRequestUserName()]);
-			$this->m->setMessage($this->m->shortPasswordStatement());
-		} else if ($this->registerWasPressed() && $this->invalidCharacters()) {
-			$this->m->setName($this->unwrap($_POST[$this->v->getRequestUserName()]));
-			$this->m->setMessage($this->m->invalidCharactersStatement());
-		} else if ($this->registerWasPressed() && $this->shortUserName()) {
-			$this->m->setName($_POST[$this->v->getRequestUserName()]);
-			$this->m->setMessage($this->m->shortUserNameStatement());
-		} else if ($this->registerWasPressed() && $this->shortPassword()) {
-			$this->m->setName($_POST[$this->v->getRequestUserName()]);
-			$this->m->setMessage($this->m->shortPasswordStatement());
-		} else if ($this->registerWasPressed() && $this->differentPasswords()) {
-			$this->m->setName($_POST[$this->v->getRequestUserName()]);
-			$this->m->setMessage($this->m->differentPasswordsStatement());
-		} else if ($this->registerWasPressed() && $this->unavailableUserName()) {
-			$this->m->setName($_POST[$this->v->getRequestUserName()]);
-			$this->m->setMessage($this->m->unavailableUserNameStatement());
-		} else if ($this->registerWasPressed()) {
-			$name = $_POST[$this->v->getRequestUserName()];
-			$password = $_POST[$this->v->getRequestPassword()];
-			$this->m->registerUser($name, $password);
-			$this->loginController->setUserName($_POST[$this->v->getRequestUserName()]);
-			$this->loginController->setMessage($this->m->registerUserStatement());
+		if ($this->registerWasPressed()) {
+			if ($this->emptyUserName() && $this->emptyPassword()) {
+				$this->m->setMessage($this->m->noInputStatement());
+			} else if ($this->emptyPassword()) {
+				$this->m->setName($this->userName());
+				$this->m->setMessage($this->m->shortPasswordStatement());
+			} else if ($this->invalidCharacters()) {
+				$this->m->setName($this->unwrap($this->userName()));
+				$this->m->setMessage($this->m->invalidCharactersStatement());
+			} else if ($this->shortUserName()) {
+				$this->m->setName($this->userName());
+				$this->m->setMessage($this->m->shortUserNameStatement());
+			} else if ($this->shortPassword()) {
+				$this->m->setName($this->userName());
+				$this->m->setMessage($this->m->shortPasswordStatement());
+			} else if ($this->differentPasswords()) {
+				$this->m->setName($this->userName());
+				$this->m->setMessage($this->m->differentPasswordsStatement());
+			} else if ($this->unavailableUserName()) {
+				$this->m->setName($this->userName());
+				$this->m->setMessage($this->m->unavailableUserNameStatement());
+			} else {
+				$name = $this->userName();
+				$password = $this->password();
+				$this->m->registerUser($this->userName(), $this->password());
+				$this->loginController->setUserName($this->userName());
+				$this->loginController->setMessage($this->m->registerUserStatement());
+			}
 		}
 	}
 	private function registerWasPressed() {
 		return isset($_POST[$this->v->getRequestRegister()]);
 	}
+	private function userName() {
+		return $_POST[$this->v->getRequestUserName()];
+	}
+	private function password() {
+		return $_POST[$this->v->getRequestPassword()];
+	}
 	private function emptyUserName() {
-		return $_POST[$this->v->getRequestUserName()] == "";
+		return $this->userName() == "";
 	}
 	private function shortUserName() {
-		$username = $_POST[$this->v->getRequestUserName()];
-		return strlen($username) < $this->m->minLengthUserName();
+		$userName = $_POST[$this->v->getRequestUserName()];
+		return strlen($userName) < $this->m->minLengthUserName();
 	}
 	private function emptyPassword() {
-		return $_POST[$this->v->getRequestPassword()] == "";
+		return $this->password() == "";
 	}
 	private function shortPassword() {
 		$password = $_POST[$this->v->getRequestPassword()];
