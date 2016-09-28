@@ -77,7 +77,7 @@ class LoginController {
 		$cookieName = $this->v->getRequestCookieName();
 		$cookiePassword = $this->v->getRequestCookiePassword();
 		setcookie($cookieName, "Admin", time()+10);
-		setcookie($cookiePassword, "kdjflakjsdflakjdflaksjdf", time()+10);
+		setcookie($cookiePassword, session_id(), time()+10);
 	}
 	private function manipulatedCookie() {
 		return $_COOKIE[$this->v->getRequestCookiePassword()] == "0123456789";
