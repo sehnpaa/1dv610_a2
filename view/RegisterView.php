@@ -25,11 +25,6 @@ class RegisterView {
 	public function response() {
 		$message = $this->m->getMessage();
 		$name = $this->m->getName();
-		/*if ($this->model->isLoggedIn()) {
-			$response = $this->generateLogoutButtonHTML($message);
-		} else {
-			$response = $this->generateLoginFormHTML($message, $name);
-		}*/
 		$response = "";
 		if ($_SERVER['QUERY_STRING'] == "register" || $_SERVER['QUERY_STRING'] == "register=1") {
 			$response = $this->generateRegisterFormHTML($message, $name);
