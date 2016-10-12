@@ -6,6 +6,8 @@ class RegisterController {
 	private $m;
 	private $v;
 	private $loginController;
+	private $validateRegex = '/<[a-zA-Z0-9]*>(.*?)<\/[a-zA-Z0-9]*>/s';
+
 	public function __construct(\model\RegisterModel $m, \view\RegisterView $v, \controller\LoginController $loginController) {
 		$this->m = $m;
 		$this->v = $v;
@@ -74,12 +76,12 @@ class RegisterController {
 		return $this->m->unavailableUserName($candidate);
 	}
 	private function unwrap($a) {
-		preg_match('/<[a-zA-Z0-9]*>(.*?)<\/[a-zA-Z0-9]*>/s', $a, $match);
+		preg_match($this->validateRegex, $a, $match);
 		return $match[1];
 	}
 	private function invalidCharacters() {
 		$a = $_POST[$this->v->getRequestUserName()];
-		preg_match('/<[a-zA-Z0-9]*>(.*?)<\/[a-zA-Z0-9]*>/s', $a, $match);
+		preg_match($this->validateRegex, $a, $match);
 		return isset($match[1]);
 	}
 
