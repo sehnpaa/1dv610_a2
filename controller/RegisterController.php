@@ -22,7 +22,7 @@ class RegisterController {
 				$this->m->setName($this->userName());
 				$this->m->setMessage($this->m->shortPasswordStatement());
 			} else if ($this->invalidCharacters()) {
-				$this->m->setName($this->unwrap($this->userName()));
+				$this->m->setName($this->removeInvalidCharacters($this->userName()));
 				$this->m->setMessage($this->m->invalidCharactersStatement());
 			} else if ($this->shortUserName()) {
 				$this->m->setName($this->userName());
@@ -75,7 +75,7 @@ class RegisterController {
 		$candidate = $_POST[$this->v->getRequestUserName()];
 		return $this->m->unavailableUserName($candidate);
 	}
-	private function unwrap($a) {
+	private function removeInvalidCharacters($a) {
 		preg_match($this->validateRegex, $a, $match);
 		return $match[1];
 	}
