@@ -32,19 +32,7 @@ class LoginController {
 		} else if ($this->alreadyAuthenticated()) {
 			$this->m->login();
 		} else if ($this->loginAttempt()) {
-			if ($this->userName() == "") {
-				$this->m->setMessage($this->m->missingUserNameStatement());
-			} else if ($this->password() == "") {
-				$this->m->setMessage($this->m->missingPasswordStatement());
-				$this->m->setName($this->userName());
-			} else if (!$this->correctCredentials()) {
-				$this->m->setMessage($this->m->badCredentialsStatement());
-			} else if ($this->correctCredentials()) {
-				$this->sessionHandler->authenticate();
-				$this->m->setMessage($this->m->welcomeStatement());
-				$this->m->login();
-				$this->setCookie();
-			}
+			$this->verifyLogin();
 		} else if ($this->cookieHandler->loginAttempt($this->v->getRequestCookieName())) {
 			if ($this->cookieHandler->manipulatedCookie($this->v->getRequestCookiePassword())) {
 				$this->m->setMessage("Wrong information in cookies");
@@ -77,6 +65,27 @@ class LoginController {
 	}
 	private function alreadyAuthenticated() {
 		return $this->sessionHandler->isAuthenticated();
+	}
+	private function verifyLogin() {
+		if ($this->emptyUserName()) {
+			$this->m->setMessage($this->m->missingUserNameStatement());
+		} else if ($this->emptyPassword()) {
+			$this->m->setMessage($this->m->missingPasswordStatement());
+			$this->m->setName($this->userName());
+		} else if (!$this->correctCredentials()) {
+			$this->m->setMessage($this->m->badCredentialsStatement());
+		} else if ($this->correctCredentials()) {
+			$this->sessionHandler->authenticate();
+			$this->m->setMessage($this->m->welcomeStatement());
+			$this->m->login();
+			$this->setCookie();
+		}
+	}
+	private function emptyUserName() {
+		return $this->userName() == "";
+	}
+	private function emptyPassword() {
+		return $this->password() == "";
 	}
 	private function setCookie() {
 		$name = $this->v->getRequestCookieName();
