@@ -3,27 +3,29 @@
 namespace controller;
 
 require_once('CookieHandler.php');
+require_once('SessionHandler.php');
 
 class LoginController {
 	private $m;
 	private $v;
-	private $cookieHandler;
 	private $postHandler;
+	private $cookieHandler;
+	private $sessionHandler;
 
 	public function __construct(\model\LoginModel $m, \view\LoginView $v, \controller\PostHandler $postHandler) {
 		$this->m = $m;
 		$this->v = $v;
 		$this->postHandler = $postHandler;
 		$this->cookieHandler = new \controller\CookieHandler();
+		$this->sessionHandler = new \controller\SessionHandler();
 	}
 
 	public function run() {
-		session_start();
 		if($this->logoutAttempt()) {
 			if ($this->alreadyAuthenticated()) {
 				$this->m->setMessage($this->m->farewellStatement());
 				$this->m->logout();
-				session_unset();
+				$this->sessionHandler->clear();
 			} else {
 				$this->m->setMessage($this->m->emptyStatement());
 			}
@@ -38,7 +40,7 @@ class LoginController {
 			} else if (!$this->correctCredentials()) {
 				$this->m->setMessage($this->m->badCredentialsStatement());
 			} else if ($this->correctCredentials()) {
-				$_SESSION['is_auth'] = true;
+				$this->sessionHandler->authenticate();
 				$this->m->setMessage($this->m->welcomeStatement());
 				$this->m->login();
 				$this->setCookie();
@@ -74,7 +76,7 @@ class LoginController {
 		return $this->postHandler->hasField($this->v->getRequestLogout());
 	}
 	private function alreadyAuthenticated() {
-		return isset($_SESSION['is_auth']);
+		return $this->sessionHandler->isAuthenticated();
 	}
 	private function setCookie() {
 		$name = $this->v->getRequestCookieName();
