@@ -8,10 +8,12 @@ class LoginController {
 	private $m;
 	private $v;
 	private $cookieHandler;
+	private $postHandler;
 
-	public function __construct(\model\LoginModel $m, \view\LoginView $v) {
+	public function __construct(\model\LoginModel $m, \view\LoginView $v, \controller\PostHandler $postHandler) {
 		$this->m = $m;
 		$this->v = $v;
+		$this->postHandler = $postHandler;
 		$this->cookieHandler = new \controller\CookieHandler();
 	}
 
@@ -32,7 +34,7 @@ class LoginController {
 				$this->m->setMessage($this->m->missingUserNameStatement());
 			} else if ($this->password() == "") {
 				$this->m->setMessage($this->m->missingPasswordStatement());
-				$this->m->setName($_POST[$this->v->getRequestUserName()]);
+				$this->m->setName($this->userName());
 			} else if (!$this->correctCredentials()) {
 				$this->m->setMessage($this->m->badCredentialsStatement());
 			} else if ($this->correctCredentials()) {
@@ -57,19 +59,19 @@ class LoginController {
 		$this->m->setMessage($message);
 	}
 	private function loginAttempt() {
-		return isset($_POST[$this->v->getRequestLogin()]);
+		return $this->postHandler->hasField($this->v->getRequestLogin());
 	}
 	private function userName() {
-		return $_POST[$this->v->getRequestUserName()];
+		return $this->postHandler->getField($this->v->getRequestUserName());
 	}
 	private function password() {
-		return $_POST[$this->v->getRequestPassword()];
+		return $this->postHandler->getField($this->v->getRequestPassword());
 	}
 	private function correctCredentials() {
 		return $this->username() == "Admin" && $this->password() == "Password";
 	}
 	private function logoutAttempt() {
-		return isset($_POST[$this->v->getRequestLogout()]);
+		return $this->postHandler->hasField($this->v->getRequestLogout());
 	}
 	private function alreadyAuthenticated() {
 		return isset($_SESSION['is_auth']);

@@ -6,12 +6,14 @@ class RegisterController {
 	private $m;
 	private $v;
 	private $loginController;
+	private $postHandler;
 	private $validateRegex = '/<[a-zA-Z0-9]*>(.*?)<\/[a-zA-Z0-9]*>/s';
 
-	public function __construct(\model\RegisterModel $m, \view\RegisterView $v, \controller\LoginController $loginController) {
+	public function __construct(\model\RegisterModel $m, \view\RegisterView $v, \controller\LoginController $loginController, \controller\PostHandler $postHandler) {
 		$this->m = $m;
 		$this->v = $v;
 		$this->loginController = $loginController;
+		$this->postHandler = $postHandler;
 	}
 
 	public function run() {
@@ -44,35 +46,35 @@ class RegisterController {
 		}
 	}
 	private function registerWasPressed() {
-		return isset($_POST[$this->v->getRequestRegister()]);
+		return $this->postHandler->hasField($this->v->getRequestRegister());
 	}
 	private function userName() {
-		return $_POST[$this->v->getRequestUserName()];
+		return $this->postHandler->getField($this->v->getRequestUserName());
 	}
 	private function password() {
-		return $_POST[$this->v->getRequestPassword()];
+		return $this->postHandler->getField($this->v->getRequestPassword());
 	}
 	private function emptyUserName() {
 		return $this->userName() == "";
 	}
 	private function shortUserName() {
-		$userName = $_POST[$this->v->getRequestUserName()];
+		$userName = $this->postHandler->getField($this->v->getRequestUserName());
 		return strlen($userName) < $this->m->minLengthUserName();
 	}
 	private function emptyPassword() {
 		return $this->password() == "";
 	}
 	private function shortPassword() {
-		$password = $_POST[$this->v->getRequestPassword()];
+		$password = $this->postHandler->getField($this->v->getRequestPassword());
 		return strlen($password) < $this->m->minLengthPassword();
 	}
 	private function differentPasswords() {
-		$password = $_POST[$this->v->getRequestPassword()];
-		$passwordRepeat = $_POST[$this->v->getRequestPasswordRepeat()];
+		$password = $this->postHandler->getField($this->v->getRequestPassword());
+		$passwordRepeat = $this->postHandler->getField($this->v->getRequestPasswordRepeat());
 		return $password != $passwordRepeat;
 	}
 	private function unavailableUserName() {
-		$candidate = $_POST[$this->v->getRequestUserName()];
+		$candidate = $this->postHandler->getField($this->v->getRequestUserName());
 		return $this->m->unavailableUserName($candidate);
 	}
 	private function removeInvalidCharacters($a) {
@@ -80,9 +82,8 @@ class RegisterController {
 		return $match[1];
 	}
 	private function invalidCharacters() {
-		$a = $_POST[$this->v->getRequestUserName()];
+		$a = $this->postHandler->getField($this->v->getRequestUserName());
 		preg_match($this->validateRegex, $a, $match);
 		return isset($match[1]);
 	}
-
 }
