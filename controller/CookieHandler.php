@@ -12,4 +12,9 @@ class CookieHandler {
 	public function loginAttempt($nameField) {
 		return isset($_COOKIE[$nameField]);
 	}
+
+	public function setNew($name, $password) {
+		setcookie($name, "Admin", time()+10);
+		setcookie($password, session_id(), time()+10);
+	}
 }

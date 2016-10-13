@@ -77,9 +77,8 @@ class LoginController {
 		return isset($_SESSION['is_auth']);
 	}
 	private function setCookie() {
-		$cookieName = $this->v->getRequestCookieName();
-		$cookiePassword = $this->v->getRequestCookiePassword();
-		setcookie($cookieName, "Admin", time()+10);
-		setcookie($cookiePassword, session_id(), time()+10);
+		$name = $this->v->getRequestCookieName();
+		$password = $this->v->getRequestCookiePassword();
+		$this->cookieHandler->setNew($name, $password);
 	}
 }
