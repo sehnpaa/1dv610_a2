@@ -2,13 +2,17 @@
 
 namespace controller;
 
+require_once('CookieHandler.php');
 
 class LoginController {
 	private $m;
 	private $v;
+	private $cookieHandler;
+
 	public function __construct(\model\LoginModel $m, \view\LoginView $v) {
 		$this->m = $m;
 		$this->v = $v;
+		$this->cookieHandler = new \controller\CookieHandler();
 	}
 
 	public function run() {
@@ -37,17 +41,14 @@ class LoginController {
 				$this->m->login();
 				$this->setCookie();
 			}
-		} else if ($this->cookieLoginAttempt()) {
-			if ($this->manipulatedCookie()) {
+		} else if ($this->cookieHandler->loginAttempt($this->v->getRequestCookieName())) {
+			if ($this->cookieHandler->manipulatedCookie($this->v->getRequestCookiePassword())) {
 				$this->m->setMessage("Wrong information in cookies");
 			} else {
 				$this->m->setMessage("Welcome back with cookie");
 				$this->m->login();
 			}
 		}
-	}
-	private function cookieLoginAttempt() {
-		return isset($_COOKIE[$this->v->getRequestCookieName()]);
 	}
 	public function setUserName($name) {
 		$this->m->setName($name);
@@ -78,8 +79,5 @@ class LoginController {
 		$cookiePassword = $this->v->getRequestCookiePassword();
 		setcookie($cookieName, "Admin", time()+10);
 		setcookie($cookiePassword, session_id(), time()+10);
-	}
-	private function manipulatedCookie() {
-		return $_COOKIE[$this->v->getRequestCookiePassword()] == "0123456789";
 	}
 }
