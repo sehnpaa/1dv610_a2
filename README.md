@@ -9,3 +9,6 @@ Alternative 2: rsync --delete --chown=www-data:www-data -av -e ssh /home/peter/1
 
 ## Testing
 Browse to and Run the use case tests from http://csquiz.lnu.se:82/.
+
+## Installing
+git clone this repository and give it to your web server with PHP-support.
