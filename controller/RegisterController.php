@@ -9,7 +9,11 @@ class RegisterController {
 	private $postHandler;
 	private $validateRegex = '/<[a-zA-Z0-9]*>(.*?)<\/[a-zA-Z0-9]*>/s';
 
-	public function __construct(\model\RegisterModel $m, \view\RegisterView $v, \controller\LoginController $loginController, \controller\PostHandler $postHandler) {
+	public function __construct(\model\RegisterModel $m,
+		\view\RegisterView $v,
+		\controller\LoginController $loginController,
+		\controller\PostHandler $postHandler
+	) {
 		$this->m = $m;
 		$this->v = $v;
 		$this->loginController = $loginController;
