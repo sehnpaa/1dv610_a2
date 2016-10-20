@@ -2,6 +2,7 @@
 
 namespace controller;
 
+require_once('Settings.php');
 require_once('CookieHandler.php');
 require_once('SessionHandler.php');
 
@@ -58,7 +59,7 @@ class LoginController {
 		return $this->postHandler->getField($this->v->getRequestPassword());
 	}
 	private function correctCredentials() {
-		return $this->username() == "Admin" && $this->password() == "Password";
+		return $this->username() == \Settings::$ADMIN_USERNAME && $this->password() == \Settings::$ADMIN_PASSWORD;
 	}
 	private function logoutAttempt() {
 		return $this->postHandler->hasField($this->v->getRequestLogout());

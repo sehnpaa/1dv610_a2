@@ -1,0 +1,6 @@
+<?php
+
+class Settings {
+	public static $ADMIN_USERNAME= "Replace with admin username";
+	public static $ADMIN_PASSWORD = "Replace With admin password";
+}
