@@ -12,3 +12,11 @@ Browse to and Run the use case tests from http://csquiz.lnu.se:82/.
 
 ## Installing
 git clone this repository and give it to your web server with PHP-support.
+
+## Run application
+
+### A2 assignment
+Browse to http://188.166.62.163/1dv610_a2/.
+
+### A4 assignment
+Browse to http://188.166.62.163/1dv610_a4/.
