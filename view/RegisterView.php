@@ -50,7 +50,8 @@ class RegisterView {
 			<input type="password" size="20" name="' . self::$password . '" id="' . self::$password . '" value="" />
 			<br/>
 			<label for="'. self::$passwordRepeat . '">Repeat password  :</label>
-			<input type="password" size="20" name="' . self::$passwordRepeat . '" id="' . self::$passwordRepeat . '" value="" />
+			<input type="password" size="20" name="' . self::$passwordRepeat
+				. '" id="' . self::$passwordRepeat . '" value="" />
 			<br/>
 			<input id="submit" type="submit" name="' . self::$register . '"  value="Register" />
 			<br/>
